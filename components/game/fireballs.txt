@@ -1,0 +1,122 @@
+"use client";
+
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { useGameStore } from '@/lib/stores/game-store';
+import * as THREE from 'three';
+
+type Fireball = {
+  id: string;
+  position: [number, number, number];
+  velocity: [number, number, number];
+  scale: number;
+};
+
+export function Fireballs() {
+  const fireballsRef = useRef<Fireball[]>([]);
+  const lastFireballTime = useRef(0);
+  const { bossAggressiveness, playerPosition, damagePlayer, gameState } = useGameStore();
+  
+  useFrame(({ clock }) => {
+    if (gameState !== 'boss') return;
+    
+    // Shoot fireballs based on aggressiveness
+    const currentTime = clock.getElapsedTime();
+    const fireballInterval = Math.max(2 - (bossAggressiveness / 100), 0.5);
+    
+    if (currentTime - lastFireballTime.current > fireballInterval) {
+      // Calculate direction towards player
+      const dx = playerPosition[0] - 0.6; // Boss x position
+      const dy = playerPosition[1] - 0; // Boss y position
+      const angle = Math.atan2(dy, dx);
+      
+      // Create new fireball
+      const fireball: Fireball = {
+        id: Math.random().toString(),
+        position: [0.6, 0, 0],
+        velocity: [
+          Math.cos(angle) * 0.05,
+          Math.sin(angle) * 0.05,
+          0
+        ],
+        scale: 1
+      };
+      
+      fireballsRef.current.push(fireball);
+      lastFireballTime.current = currentTime;
+    }
+    
+    // Update fireballs
+    fireballsRef.current = fireballsRef.current.filter(fireball => {
+      // Update position
+      fireball.position[0] += fireball.velocity[0];
+      fireball.position[1] += fireball.velocity[1];
+      
+      // Check collision with player
+      const dx = fireball.position[0] - playerPosition[0];
+      const dy = fireball.position[1] - playerPosition[1];
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      if (distance < 0.3) {
+        damagePlayer(10);
+        return false;
+      }
+      
+      // Remove if out of bounds
+      if (
+        fireball.position[0] < -3 ||
+        fireball.position[0] > 3 ||
+        fireball.position[1] < -2 ||
+        fireball.position[1] > 2
+      ) {
+        return false;
+      }
+      
+      return true;
+    });
+  });
+  
+  return (
+    <group>
+      {fireballsRef.current.map(fireball => (
+        <group
+          key={fireball.id}
+          position={[fireball.position[0], fireball.position[1], fireball.position[2]]}
+          scale={[0.2, 0.2, 0.2]}
+        >
+          {/* Core */}
+          <mesh>
+            <sphereGeometry args={[0.5, 16, 16]} />
+            <meshStandardMaterial
+              color="#ff4400"
+              emissive="#ff8800"
+              emissiveIntensity={2}
+              transparent
+              opacity={0.9}
+            />
+          </mesh>
+          
+          {/* Outer glow */}
+          <mesh scale={[1.2, 1.2, 1.2]}>
+            <sphereGeometry args={[0.5, 16, 16]} />
+            <meshStandardMaterial
+              color="#ff8800"
+              emissive="#ffaa00"
+              emissiveIntensity={1.5}
+              transparent
+              opacity={0.4}
+            />
+          </mesh>
+          
+          {/* Light source */}
+          <pointLight
+            color="#ff6600"
+            intensity={2}
+            distance={2}
+            decay={2}
+          />
+        </group>
+      ))}
+    </group>
+  );
+}

@@ -1,0 +1,357 @@
+"use client";
+
+import { useRef, useEffect } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { useGameStore } from '@/lib/stores/game-store';
+import * as THREE from 'three';
+
+function BossHealthBar({ position }: { position: [number, number, number] }) {
+  const { bossHealth } = useGameStore();
+  
+  return (
+    <group position={position}>
+      {/* Background bar */}
+      <mesh position={[0, 0.8, 0]}>
+        <planeGeometry args={[1, 0.1]} />
+        <meshBasicMaterial color="#2c3e50" transparent opacity={0.5} />
+      </mesh>
+      
+      {/* Health bar */}
+      <mesh position={[-0.5 + ((bossHealth / 100) * 0.5), 0.8, 0.1]}>
+        <planeGeometry args={[bossHealth / 100, 0.08]} />
+        <meshBasicMaterial 
+          color={bossHealth > 50 ? "#50fa7b" : bossHealth > 25 ? "#ffb86c" : "#ff5555"}
+          transparent 
+          opacity={0.8} 
+        />
+      </mesh>
+    </group>
+  );
+}
+
+export function Boss() {
+  const groupRef = useRef<THREE.Group>(null);
+  const hitboxRef = useRef<THREE.Mesh>(null);
+  const { bossHealth, bossAggressiveness } = useGameStore();
+  const animationStartTime = useRef(Date.now());
+  const hasAnimationCompleted = useRef(false);
+  
+  const posRef = useRef({
+    x: 2,
+    y: 0,
+    velocityX: 0,
+    velocityY: 0,
+    targetX: 0.6
+  });
+
+  useEffect(() => {
+    if (hitboxRef.current) {
+      hitboxRef.current.userData.type = 'boss';
+      hitboxRef.current.userData.isBoss = true;
+    }
+  }, []);
+  
+  useFrame(({ clock }) => {
+    if (!groupRef.current || !hitboxRef.current) return;
+    
+    const timeSinceStart = (Date.now() - animationStartTime.current) / 1000;
+    
+    // Initial entrance animation
+    if (timeSinceStart <= 0.5) {
+      const progress = Math.min(timeSinceStart / 0.5, 1);
+      posRef.current.x = 2 - (1.4 * progress);
+      groupRef.current.position.x = posRef.current.x;
+      return;
+    }
+    
+    if (!hasAnimationCompleted.current) {
+      hasAnimationCompleted.current = true;
+    }
+    
+    // After animation, handle physics-based movement
+    if (hasAnimationCompleted.current) {
+      posRef.current.velocityX *= 0.95;
+      posRef.current.velocityY *= 0.95;
+      
+      posRef.current.x += posRef.current.velocityX;
+      posRef.current.y += posRef.current.velocityY;
+      
+      // Boundary checks
+      if (posRef.current.x > 4) {
+        posRef.current.x = 4;
+        posRef.current.velocityX = 0;
+      }
+      if (posRef.current.x < -4) {
+        posRef.current.x = -4;
+        posRef.current.velocityX = 0;
+      }
+      if (posRef.current.y > 2) {
+        posRef.current.y = 2;
+        posRef.current.velocityY = 0;
+      }
+      if (posRef.current.y < -2) {
+        posRef.current.y = -2;
+        posRef.current.velocityY = 0;
+      }
+      
+      // Floating animation
+      posRef.current.y += Math.sin(clock.getElapsedTime() * 2) * 0.001;
+    }
+    
+    // Update group position
+    groupRef.current.position.x = posRef.current.x;
+    groupRef.current.position.y = posRef.current.y;
+    
+    // Update hitbox position to match group
+    hitboxRef.current.position.copy(groupRef.current.position);
+    
+    // Scale based on health and aggressiveness
+    const scale = 1.2 * (0.8 + (bossHealth / 100) * 0.4) * (1 + (bossAggressiveness / 100) * 0.3);
+    groupRef.current.scale.set(scale, scale, scale);
+    
+    // Scale hitbox accordingly but keep it slightly larger
+    hitboxRef.current.scale.set(scale * 1.5, scale * 1.5, scale * 1.5);
+  });
+
+  return (
+    <group ref={groupRef} position={[2, 0, 0]}>
+      {/* Health Bar */}
+      <BossHealthBar position={[0, 0, 0]} />
+      
+      {/* Hitbox - Made larger and semi-transparent for better collision detection */}
+      <mesh 
+        ref={hitboxRef}
+        userData={{ type: 'boss', isBoss: true }}
+      >
+        <boxGeometry args={[2, 1.5, 0.1]} />
+        <meshBasicMaterial color="#ff0000" transparent opacity={0.2} />
+      </mesh>
+      
+      {/* Main Body */}
+      <mesh position={[0, 0, 0]}>
+        <sphereGeometry args={[0.4, 32, 32]} />
+        <meshStandardMaterial
+          color="#50fa7b"
+          emissive="#50fa7b"
+          emissiveIntensity={0.8 + (bossAggressiveness / 100) * 0.7}
+          metalness={0.8}
+          roughness={0.2}
+        />
+      </mesh>
+
+      {/* Multiple Heads */}
+      {[
+        { position: [0.2, 0.2, 0], rotation: [0, 0, Math.PI / 6] },
+        { position: [0.2, -0.2, 0], rotation: [0, 0, -Math.PI / 6] },
+        { position: [0.4, 0, 0], rotation: [0, 0, 0] }
+      ].map((head, index) => (
+        <group key={index} position={head.position} rotation={head.rotation}>
+          {/* Neck Segments */}
+          {Array.from({ length: 4 }).map((_, i) => (
+            <mesh 
+              key={`neck-${i}`} 
+              position={[-0.1 * i, 0, 0]}
+              rotation={[0, 0, Math.sin(Date.now() * 0.002 + i) * 0.2]}
+            >
+              <cylinderGeometry args={[0.08, 0.08, 0.1, 8]} />
+              <meshStandardMaterial
+                color="#50fa7b"
+                emissive="#50fa7b"
+                emissiveIntensity={0.5}
+                metalness={0.7}
+                roughness={0.3}
+              />
+            </mesh>
+          ))}
+
+          {/* Head */}
+          <group position={[0.2, 0, 0]}>
+            {/* Main Head Structure */}
+            <mesh>
+              <sphereGeometry args={[0.15, 16, 16]} />
+              <meshStandardMaterial
+                color="#50fa7b"
+                emissive="#50fa7b"
+                emissiveIntensity={0.8}
+                metalness={0.8}
+                roughness={0.2}
+              />
+            </mesh>
+
+            {/* Face Features */}
+            {/* Eyes (4 per head) */}
+            {Array.from({ length: 4 }).map((_, i) => {
+              const angle = (i / 4) * Math.PI * 2;
+              return (
+                <group 
+                  key={`eye-${i}`} 
+                  position={[
+                    Math.cos(angle) * 0.1,
+                    Math.sin(angle) * 0.1,
+                    0.1
+                  ]}
+                >
+                  {/* Eye Socket */}
+                  <mesh>
+                    <sphereGeometry args={[0.05, 16, 16]} />
+                    <meshStandardMaterial
+                      color="#2c3e50"
+                      emissive="#2c3e50"
+                      emissiveIntensity={0.5}
+                    />
+                  </mesh>
+                  
+                  {/* Eye Ball */}
+                  <mesh position={[0, 0, 0.02]}>
+                    <sphereGeometry args={[0.04, 16, 16]} />
+                    <meshStandardMaterial
+                      color="#ff5555"
+                      emissive="#ff5555"
+                      emissiveIntensity={0.5 + (bossAggressiveness / 100) * 0.5}
+                    />
+                  </mesh>
+                  
+                  {/* Pupil */}
+                  <mesh position={[0, 0, 0.04]}>
+                    <sphereGeometry args={[0.02, 8, 8]} />
+                    <meshStandardMaterial color="#000000" />
+                  </mesh>
+                </group>
+              );
+            })}
+
+            {/* Mouth */}
+            <group position={[0.08, 0, 0.05]}>
+              {/* Outer Mouth Ring */}
+              <mesh rotation={[0, 0, 0]}>
+                <torusGeometry args={[0.08, 0.02, 16, 32]} />
+                <meshStandardMaterial
+                  color="#2c3e50"
+                  emissive="#2c3e50"
+                  emissiveIntensity={0.5}
+                />
+              </mesh>
+              
+              {/* Inner Mouth */}
+              <mesh position={[0, 0, -0.01]}>
+                <cylinderGeometry args={[0.07, 0.07, 0.04, 32]} />
+                <meshStandardMaterial
+                  color="#ff5555"
+                  emissive="#ff5555"
+                  emissiveIntensity={0.8}
+                />
+              </mesh>
+              
+              {/* Teeth */}
+              {Array.from({ length: 8 }).map((_, i) => {
+                const angle = (i / 8) * Math.PI * 2;
+                return (
+                  <mesh
+                    key={`tooth-${i}`}
+                    position={[
+                      Math.cos(angle) * 0.06,
+                      Math.sin(angle) * 0.06,
+                      0
+                    ]}
+                    rotation={[0, 0, angle]}
+                  >
+                    <coneGeometry args={[0.015, 0.03, 4]} />
+                    <meshStandardMaterial
+                      color="#ffffff"
+                      emissive="#ffffff"
+                      emissiveIntensity={0.2}
+                    />
+                  </mesh>
+                );
+              })}
+            </group>
+
+            {/* Mandibles */}
+            {[1, -1].map((side) => (
+              <group key={`mandible-${side}`} position={[0.1, 0.05 * side, 0]}>
+                <mesh rotation={[0, 0, side * Math.PI / 4]}>
+                  <coneGeometry args={[0.05, 0.2, 4]} />
+                  <meshStandardMaterial
+                    color="#ff5555"
+                    emissive="#ff5555"
+                    emissiveIntensity={0.5}
+                  />
+                </mesh>
+                
+                {/* Mandible Teeth */}
+                <mesh 
+                  position={[0.08, 0, 0]} 
+                  rotation={[0, 0, side * Math.PI / 4]}
+                >
+                  <coneGeometry args={[0.02, 0.06, 3]} />
+                  <meshStandardMaterial
+                    color="#ffffff"
+                    emissive="#ffffff"
+                    emissiveIntensity={0.2}
+                  />
+                </mesh>
+              </group>
+            ))}
+          </group>
+        </group>
+      ))}
+      
+      {/* Wings */}
+      {[1, -1].map((side) => (
+        <group key={`wing-${side}`} position={[0, 0.2 * side, -0.1]}>
+          {/* Main Wing */}
+          <mesh rotation={[0, 0.2, 0.3 * side + Math.sin(Date.now() * 0.01) * 0.2]}>
+            <planeGeometry args={[0.6, 0.4]} />
+            <meshStandardMaterial
+              color="#50fa7b"
+              emissive="#50fa7b"
+              emissiveIntensity={0.3}
+              transparent
+              opacity={0.7}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+          {/* Wing Pattern */}
+          <mesh rotation={[0, 0.2, 0.3 * side + Math.sin(Date.now() * 0.01) * 0.2]}>
+            <planeGeometry args={[0.5, 0.35]} />
+            <meshStandardMaterial
+              color="#ff5555"
+              emissive="#ff5555"
+              emissiveIntensity={0.2}
+              transparent
+              opacity={0.3}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        </group>
+      ))}
+      
+      {/* Health Indicator Ring */}
+      <mesh position={[0, 0, -0.1]} rotation={[0, 0, 0]}>
+        <ringGeometry args={[0.45, 0.5, 32]} />
+        <meshStandardMaterial
+          color="#ff5555"
+          emissive="#ff5555"
+          emissiveIntensity={1 - (bossHealth / 100)}
+          transparent
+          opacity={1 - (bossHealth / 100)}
+        />
+      </mesh>
+      
+      {/* Dynamic Lighting */}
+      <pointLight
+        color="#50fa7b"
+        intensity={0.5 + (bossAggressiveness / 100) * 0.5}
+        distance={2}
+        decay={2}
+      />
+      <pointLight
+        color="#ff5555"
+        intensity={0.3 + (1 - (bossHealth / 100)) * 0.5}
+        distance={1.5}
+        decay={2}
+        position={[0.3, 0, 0.2]}
+      />
+    </group>
+  );
+}
