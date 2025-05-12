@@ -20,10 +20,10 @@ export const projects: Project[] = [
     description: "A modern take on the classic game with real-time multiplayer capabilities and an unbeatable AI opponent.",
     longDescription: "A feature-rich implementation of the classic Tic-Tac-Toe game, offering both single-player mode against an AI and real-time multiplayer functionality. The AI opponent uses the minimax algorithm to make optimal moves, while the multiplayer mode enables real-time gameplay using WebSocket connections.",
     technologies: ["React", "TypeScript", "Socket.io", "TailwindCSS", "Node.js", "Express"],
-    image: "https://images.pexels.com/photos/7014761/pexels-photo-7014761.jpeg",
+    image: "/tic-tac-toe-tn2.jpg",
     images: [
-      "https://images.pexels.com/photos/7014761/pexels-photo-7014761.jpeg",
-      "https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg"
+      "/tic-tac-toe-tn2.jpg",
+      "/tic-tac-toe-tn.jpg",
     ],
     githubUrl: "https://github.com/jojimer/tic-tac-toe",
     liveUrl: "#",
@@ -51,10 +51,10 @@ export const projects: Project[] = [
     description: "A minimalist habit tracking application that helps users build and maintain positive daily routines.",
     longDescription: "A comprehensive habit tracking application designed to help users develop and maintain positive daily routines. The app features a clean, intuitive interface and provides detailed analytics to help users understand their habit-forming patterns.",
     technologies: ["Next.js", "Supabase", "TailwindCSS", "Framer Motion", "Chart.js", "TypeScript"],
-    image: "https://images.pexels.com/photos/5386754/pexels-photo-5386754.jpeg",
+    image: "/habit-tracker-tn1.jpg",
     images: [
-      "https://images.pexels.com/photos/5386754/pexels-photo-5386754.jpeg",
-      "https://images.pexels.com/photos/3243090/pexels-photo-3243090.jpeg"
+      "/habit-tracker-tn1.jpg",
+      "/habit-tracker-ss.png"
     ],
     githubUrl: "https://github.com/jojimer/habit-tracker",
     liveUrl: "#",
@@ -82,10 +82,10 @@ export const projects: Project[] = [
     description: "Real-time weather forecasting application with beautiful visualizations and location-based updates.",
     longDescription: "A sophisticated weather application that provides real-time weather data and forecasts with beautiful visualizations. The app features location-based weather updates, detailed meteorological data, and interactive weather maps.",
     technologies: ["React", "OpenWeather API", "Chart.js", "TailwindCSS", "TypeScript", "Axios"],
-    image: "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg",
+    image: "/weather-hub-tn.jpg",
     images: [
-      "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg",
-      "https://images.pexels.com/photos/2448749/pexels-photo-2448749.jpeg"
+      "/weather-hub-tn.jpg",
+      "/weather-app-ss.png"
     ],
     githubUrl: "https://github.com/jojimer/weather-app",
     liveUrl: "#",
