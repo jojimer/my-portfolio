@@ -178,6 +178,17 @@ const ProjectContent = ({ project }: { project: Project }) => {
             </div>
           </motion.div>
         </div>
+        <motion.div
+            className="mt-16 text-left"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <p className="text-sm opacity-70">
+              © {new Date().getFullYear()} jojimercastino.com All rights reserved. - Web App Developer | Bassist | Yoga Meditation Practitioner
+            </p>
+        </motion.div>
       </div>
     </main>
   );

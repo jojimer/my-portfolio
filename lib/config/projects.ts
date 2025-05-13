@@ -17,9 +17,9 @@ export const projects: Project[] = [
   {
     slug: "tic-tac-toe",
     title: "Tic-Tac-Toe",
-    description: "A modern take on the classic game with real-time multiplayer capabilities and an unbeatable AI opponent.",
-    longDescription: "A feature-rich implementation of the classic Tic-Tac-Toe game, offering both single-player mode against an AI and real-time multiplayer functionality. The AI opponent uses the minimax algorithm to make optimal moves, while the multiplayer mode enables real-time gameplay using WebSocket connections.",
-    technologies: ["React", "TypeScript", "Socket.io", "TailwindCSS", "Node.js", "Express"],
+    description: "A modern take on the classic game with multiplayer capabilities and round system.",
+    longDescription: "a modern, stylized version of the classic tic-tac-toe game, enhanced with multiplayer functionality and a round-based system. Designed for both fun and fast-paced interactions, it features smooth state management with Jotai, elegant UI styling via TailwindCSS and daisyUI, and is built entirely with React and TypeScript.",
+    technologies: ["React", "Jotai", "TypeScript", "TailwindCSS", "daisy UI"],
     image: "/tic-tac-toe-tn2.jpg",
     images: [
       "/tic-tac-toe-tn2.jpg",
@@ -28,29 +28,34 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/jojimer/tic-tac-toe",
     liveUrl: "#",
     features: [
-      "Unbeatable AI opponent using minimax algorithm",
-      "Real-time multiplayer functionality",
-      "Beautiful animations and transitions",
-      "Responsive design for all devices",
-      "Game history and statistics tracking"
+      "Two-player turn-based game logic",
+      "Live round tracking and scoreboard",
+      "Minimalist, responsive game UI",
+      "Game history and statistics tracking",
+      "Global state via Jotai atoms",
+      "Component-based structure with TypeScript",
+      "Tailwind + daisyUI for styling"
     ],
     challenges: [
-      "Implementing an efficient minimax algorithm for the AI",
-      "Managing real-time game state across multiple clients",
-      "Optimizing performance for smooth animations"
+      "Managing turn logic and rounds",
+      "Designing persistent game state",
+      "Balancing minimalist yet engaging UI",
+      "Handling tie and win conditions"
     ],
     learnings: [
-      "Deep understanding of game theory and AI algorithms",
-      "WebSocket implementation for real-time applications",
-      "State management in multiplayer scenarios"
+      "Jotai for lightweight state management",
+      "Game logic structuring in React",
+      "Polished UI with daisyUI/Tailwind",
+      "Dynamic rendering with TypeScript",
+      "Real-time interactivity best practices"
     ]
   },
   {
     slug: "habit-tracker",
     title: "Habit Tracker",
     description: "A minimalist habit tracking application that helps users build and maintain positive daily routines.",
-    longDescription: "A comprehensive habit tracking application designed to help users develop and maintain positive daily routines. The app features a clean, intuitive interface and provides detailed analytics to help users understand their habit-forming patterns.",
-    technologies: ["Next.js", "Supabase", "TailwindCSS", "Framer Motion", "Chart.js", "TypeScript"],
+    longDescription: "A comprehensive habit tracking application designed to help users develop and maintain positive daily routines. The app features a clean, focused interface that eliminates distractions, emphasizes simplicity, and provides detailed analytics to help users understand their habit-forming patterns. Users can create custom habits, log daily completions, and view their progress over time through intuitive charts.",
+    technologies: ["React", "Next.js", "TailwindCSS", "Recharts", "TypeScript"],
     image: "/habit-tracker-tn1.jpg",
     images: [
       "/habit-tracker-tn1.jpg",
@@ -60,28 +65,36 @@ export const projects: Project[] = [
     liveUrl: "#",
     features: [
       "Daily, weekly, and monthly habit tracking",
-      "Detailed progress analytics and visualizations",
+      "Habit Catogories(Health, Productivity, & personal growth)",
+      "Detailed progress analytics and visualizations using Recharts",
       "Customizable habit categories and goals",
       "Streak tracking and milestone celebrations",
-      "Mobile-first responsive design"
+      "Mobile-first responsive design",
+      "Light/Dark mode toggle support",
+      "Persistent data with local storage"
     ],
     challenges: [
       "Designing an intuitive user interface for complex habit tracking",
-      "Implementing efficient data synchronization with Supabase",
-      "Creating meaningful analytics visualizations"
+      "Managing complex state updates",
+      "Creating meaningful analytics visualizations",
+      "Ensuring mobile-responsive layout",
+      "Enforcing strict TypeScript types"
     ],
     learnings: [
       "Advanced state management with React Query",
-      "Real-time database operations with Supabase",
-      "Data visualization techniques with Chart.js"
+      "React integration in Next.js apps",
+      "Clean UI using TailwindCSS",
+      "UX principles for habit tracking",
+      "Scalable architecture in Next.js",
+      "Improved component design patterns"
     ]
   },
   {
     slug: "weather-app",
-    title: "Weather App",
+    title: "Weather Hub",
     description: "Real-time weather forecasting application with beautiful visualizations and location-based updates.",
-    longDescription: "A sophisticated weather application that provides real-time weather data and forecasts with beautiful visualizations. The app features location-based weather updates, detailed meteorological data, and interactive weather maps.",
-    technologies: ["React", "OpenWeather API", "Chart.js", "TailwindCSS", "TypeScript", "Axios"],
+    longDescription: "A sophisticated weather application that provides real-time weather data and forecasts with beautiful visualizations. The app features location-based weather updates, detailed meteorological data, and interactive weather maps. This project emphasizes API integration, reactive data handling, and meaningful visual communication, making it both a utility tool and a showcase of front-end craftsmanship.",
+    technologies: ["React", "Recharts", "TypeScript", "OpenWeather API", "TailwindCSS"],
     image: "/weather-hub-tn.jpg",
     images: [
       "/weather-hub-tn.jpg",
@@ -90,21 +103,26 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/jojimer/weather-app",
     liveUrl: "#",
     features: [
-      "Real-time weather updates and forecasts",
+      "Real-time weather via OpenWeather API",
       "Interactive weather maps and radar",
-      "Detailed meteorological data visualization",
-      "Location-based automatic updates",
-      "Severe weather alerts and notifications"
+      "Interactive charts with Recharts",
+      "Auto location-based weather updates",
+      "Severe weather alerts and notifications",
+      "Hourly and weekly forecast options"
     ],
     challenges: [
-      "Handling complex API data from multiple weather services",
+      "Handling async API data updates",
       "Creating smooth animations for weather transitions",
-      "Implementing accurate geolocation services"
+      "Implementing accurate geolocation services",
+      "Mapping weather data to charts",
+      "Designing compact, responsive layouts"
     ],
     learnings: [
+      "Dynamic data visualization with Recharts",
       "Working with third-party weather APIs",
-      "Geolocation and mapping integration",
-      "Creating responsive data visualizations"
+      "Geo-based interactivity and UX logic",
+      "Creating responsive data visualizations",
+      "TypeScript for safer component design"
     ]
   }
 ];

@@ -202,7 +202,7 @@ export function ContactSection() {
             transition={{ delay: 0.8, duration: 0.6 }}
           >
             <p className="text-sm opacity-70">
-              © {new Date().getFullYear()} Joji | Web App Developer. All rights reserved.
+              © {new Date().getFullYear()} jojimercastino.com All rights reserved. - Web App Developer | Bassist | Yoga Meditation Practitioner
             </p>
           </motion.div>
         </motion.div>
