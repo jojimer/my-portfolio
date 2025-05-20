@@ -90,7 +90,7 @@ export default function ProjectsPage() {
                     variant="ghost"
                     size="sm"
                     className="flex-1 group/btn hover:bg-primary/5"
-                    onClick={() => window.open(project.liveUrl, '_blank')}
+                    onClick={() => window.open(`/projects/${project.slug}/demo`, '_blank')}
                   >
                     <ExternalLink className="mr-2 h-4 w-4 group-hover/btn:text-primary" />
                     <span className="group-hover/btn:text-primary">Demo</span>
@@ -109,7 +109,7 @@ export default function ProjectsPage() {
           transition={{ delay: 0.8, duration: 0.6 }}
         >
           <p className="text-sm opacity-70">
-            © {new Date().getFullYear()} Joji | Web App Developer. All rights reserved.
+            © {new Date().getFullYear()} jojimercastino.com All rights reserved. - Web App Developer | Bassist | Yoga Meditation Practitioner
           </p>
         </motion.div>
       </div>

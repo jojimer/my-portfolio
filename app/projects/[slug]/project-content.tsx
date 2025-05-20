@@ -54,7 +54,7 @@ const ProjectContent = ({ project }: { project: Project }) => {
           <Button
             size="lg"
             className="group bg-white text-black hover:bg-white/90"
-            onClick={() => window.open(project.liveUrl, '_blank')}
+            onClick={() => window.open(`/projects/${project.slug}/demo`, '_blank')}
           >
             <ExternalLink className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
             View Live Demo

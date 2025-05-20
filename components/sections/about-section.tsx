@@ -58,7 +58,7 @@ export function AboutSection() {
                   </div>
                   <div className="flex items-center gap-3">
                     <Gamepad2 className="h-5 w-5 text-chart-3" />
-                    <span>WebGL / React Three Fiber</span>
+                    <span>Framer Motion / Lottie</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Code2 className="h-5 w-5 text-chart-4" />
