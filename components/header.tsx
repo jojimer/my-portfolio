@@ -8,7 +8,7 @@ import { useGameStore } from '@/lib/stores/game-store';
 import { usePathname, useRouter } from 'next/navigation';
 
 const menuItems = [
-  { label: 'PLAY', href: 0 },
+  { label: 'PLAY' , href: 0 },
   { label: 'ABOUT', href: 1 },
   { label: 'SKILLS', href: 2 },
   { label: 'PROJECTS', href: 3 },
@@ -125,7 +125,7 @@ export function Header() {
                   className="block w-full text-left px-4 py-3 text-sm tracking-[0.2em] font-medium text-foreground hover:text-primary transition-colors"
                   onClick={() => handleNavigation(item.href)}
                 >
-                  {item.label}
+                  {isMobile && item.label==='PLAY' ? 'HOME' :item.label}
                 </button>
               ))}
             </nav>

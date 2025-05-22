@@ -16,9 +16,10 @@ export async function POST(request: Request) {
     });
 
     const mailOptions = {
-      from: email,
-      to: process.env.SMTP_USER,
+      from: process.env.SMTP_USER,
+      to: process.env.EMAIL_RECEIVER,
       subject: `New Portfolio Message from ${name}`,
+      replyTo: email,
       text: message,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">

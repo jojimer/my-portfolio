@@ -33,3 +33,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+#->notes when building it on the server
+#  NODE_OPTIONS="--max-old-space-size=4096" npm run build
+#->pm2 notes
+#  pm2 start npm --name "my-portfolio" -- start
+#  pm2 startup
+#  pm2 save
