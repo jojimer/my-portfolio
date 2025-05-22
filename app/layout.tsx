@@ -40,7 +40,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {isMobile && (<Header />)}
+          <Header />
           {children}
         </ThemeProvider>
       </body>

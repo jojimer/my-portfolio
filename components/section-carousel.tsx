@@ -143,6 +143,7 @@ export function SectionCarousel({
                 whileTap={{ scale: 0.9 }}
               >
                 <Button
+                  id={`btn${index}`}
                   variant={selectedIndex === index ? "default" : "outline"}
                   size="icon"
                   className={cn(

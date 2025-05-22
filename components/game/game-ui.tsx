@@ -23,9 +23,10 @@ export function GameUI() {
   };
 
   const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
+    const aboutSection = document.getElementById('btn1');
     if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
+      // aboutSection.scrollIntoView({ behavior: 'smooth' });
+      aboutSection.click()
     }
   };
 

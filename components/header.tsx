@@ -15,14 +15,6 @@ const menuItems = [
   { label: 'CONTACT', href: 4 }
 ];
 
-// const mobileURL = {
-//   PLAY: '#hero',
-//   ABOUT: '#about',
-//   SKILLS: '#skills',
-//   PROJECTS: '#projects',
-//   CONTACT: '#contact'
-// }
-
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -73,15 +65,15 @@ export function Header() {
   };
 
   // Hide header on mobile during gameplay
-  // if (isMobile && gameState === 'playing') {
-  //   return null;
-  // }
+  if (isMobile && gameState === 'playing') {
+    return null;
+  }
 
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled ? 'bg-background/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'
-      }`}
+      } ${isMobile && 'hidden'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-24">
@@ -132,7 +124,7 @@ export function Header() {
                   key={item.label}
                   className="block w-full text-left px-4 py-3 text-sm tracking-[0.2em] font-medium text-foreground hover:text-primary transition-colors"
                   onClick={() => handleNavigation(item.href)}
-                  onTouchEnd={() => handleNavigation(item.href)}
+                  // onTouchEnd={() => handleNavigation(item.href)}
                 >
                   {isMobile && item.label==='PLAY' ? 'HOME' :item.label}
                 </button>
