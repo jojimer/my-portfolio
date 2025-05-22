@@ -20,6 +20,13 @@ export function HeroSection() {
     }
   };
 
+  const scrollToAboutMobile = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative h-screen w-screen overflow-hidden">
         { !isMobile && (<div className="absolute inset-0 w-full h-full"><GameCanvas /></div>)}
@@ -30,8 +37,8 @@ export function HeroSection() {
               <h1 className="text-white inline-flex font-bold text-2xl w-10/12 mx-auto text-center flex-col align-top">
                 <span className='inline-flex justify-center'><Lightbulb className='mr-1 h-6 w-auto' />Helping Startups</span> Transform Ideas into Powerful WebApps
               </h1>
-              <div className="flex justify-center h-3/4"><Lottie animationData={ animationData } /></div>
-              <p className="text-white text-md font-weight-light w-10/12 mx-auto text-center">
+              <div className="flex justify-center h-3/4 mb-2"><Lottie animationData={ animationData } /></div>
+              <p className="text-white text-md font-weight-light w-10/12 mx-auto text-center mb-6">
                 I'm a Fullstack Developer crafting modern web applications using React, Next.js, and TypeScript.
               </p>
               <div className="flex justify-center">
@@ -43,7 +50,7 @@ export function HeroSection() {
                   <Button
                     variant="outline"
                     size="lg"
-                    onClick={scrollToAbout}
+                    onClick={scrollToAboutMobile}
                     className="rounded-full bg-transparent backdrop-blur-sm border-primary/50 hover:bg-primary/20"
                   >
                     <ArrowDownCircle className="mr-2 h-4 w-4" />
