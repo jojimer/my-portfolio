@@ -28,12 +28,12 @@ const ProjectContent = ({ project }: { project: Project }) => {
             transition={{ duration: 0.5 }}
           >
             <Link href="/projects">
-              <Button variant="ghost" className="mb-8 hover:bg-background/20">
+              <Button variant="ghost" className="px-0 md:px-3 mb-3 hover:bg-background/20">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Projects
               </Button>
             </Link>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50">
+            <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50">
               {project.title}
             </h1>
             <p className="text-xl md:text-2xl text-primary/80 max-w-3xl">
@@ -179,7 +179,7 @@ const ProjectContent = ({ project }: { project: Project }) => {
           </motion.div>
         </div>
         <motion.div
-            className="mt-16 text-left"
+            className="mt-16 md:text-left text-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}

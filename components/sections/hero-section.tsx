@@ -38,7 +38,7 @@ export function HeroSection() {
                 <span className='inline-flex justify-center'><Lightbulb className='mr-1 h-6 w-auto' />Helping Startups</span> Transform Ideas into Powerful WebApps
               </h1>
               <div className="flex justify-center h-3/4 mb-2"><Lottie animationData={ animationData } /></div>
-              <p className="text-white text-md font-weight-light w-10/12 mx-auto text-center mb-6">
+              <p className="text-white text-md font-weight-light w-10/12 mx-auto text-center">
                 I'm a Fullstack Developer crafting modern web applications using React, Next.js, and TypeScript.
               </p>
               <div className="flex justify-center">

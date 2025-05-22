@@ -18,10 +18,10 @@ export default function ProjectsPage() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-2">
+            <h1 className="text-2xl md:text-5xl font-bold text-primary mb-2">
               Projects Portfolio
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="md:text-lg sm:text-md text-muted-foreground">
               Explore my latest work and side projects
             </p>
           </div>
