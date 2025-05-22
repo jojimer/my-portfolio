@@ -15,6 +15,14 @@ const menuItems = [
   { label: 'CONTACT', href: 4 }
 ];
 
+// const mobileURL = {
+//   PLAY: '#hero',
+//   ABOUT: '#about',
+//   SKILLS: '#skills',
+//   PROJECTS: '#projects',
+//   CONTACT: '#contact'
+// }
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -65,9 +73,9 @@ export function Header() {
   };
 
   // Hide header on mobile during gameplay
-  if (isMobile && gameState === 'playing') {
-    return null;
-  }
+  // if (isMobile && gameState === 'playing') {
+  //   return null;
+  // }
 
   return (
     <header 
@@ -124,6 +132,7 @@ export function Header() {
                   key={item.label}
                   className="block w-full text-left px-4 py-3 text-sm tracking-[0.2em] font-medium text-foreground hover:text-primary transition-colors"
                   onClick={() => handleNavigation(item.href)}
+                  onTouchEnd={() => handleNavigation(item.href)}
                 >
                   {isMobile && item.label==='PLAY' ? 'HOME' :item.label}
                 </button>

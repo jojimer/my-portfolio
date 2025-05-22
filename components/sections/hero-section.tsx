@@ -10,7 +10,7 @@ import { useGameStore } from '@/lib/stores/game-store';
 import { isMobile } from 'react-device-detect';
 
 export function HeroSection() {
-  const { gameState } = useGameStore();
+  const { gameState } = isMobile ? {gameState: 'gameover'} : useGameStore();
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById('about');
@@ -28,7 +28,7 @@ export function HeroSection() {
 
   return (
     <section className="relative h-screen w-screen overflow-hidden">
-      <div className="absolute inset-0 w-full h-full">
+      <div className={`absolute inset-0 w-full`}>
         { !isMobile && (<GameCanvas />)}
         { isMobile && (
           <div id="hero-text-wrap" className="absolute gap-4 inset-0 w-screen h-screen overflow-hidden flex items-center justify-center flex-col bg-gray-900 text-white">
@@ -36,7 +36,7 @@ export function HeroSection() {
               <h1 className="text-white inline-flex font-bold text-3xl w-10/12 mx-auto text-center flex-col align-top">
               <span className='inline-flex justify-center'><Lightbulb className='mr-1 h-10 w-auto' />Helping Startups</span> Transform Ideas into Powerful WebApps
               </h1>
-              <div className="flex justify-center h-52"><Lottie animationData={ animationData } /></div>
+              <div className="flex justify-center h-3/4"><Lottie animationData={ animationData } /></div>
               <p className="text-white text-md font-weight-light w-10/12 mx-auto text-center">
                 I'm a Fullstack Developer crafting modern web applications using React, Next.js, and TypeScript.
               </p>

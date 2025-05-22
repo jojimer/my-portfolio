@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Header } from '@/components/header';
+import { isMobile } from 'react-device-detect';
 
 const spaceGrotesk = Space_Grotesk({ 
   subsets: ['latin'],
@@ -39,7 +40,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          {isMobile && (<Header />)}
           {children}
         </ThemeProvider>
       </body>
