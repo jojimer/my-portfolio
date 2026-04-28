@@ -26,7 +26,7 @@ export const projects: Project[] = [
       "/tic-tac-toe-tn.jpg",
     ],
     githubUrl: "https://github.com/jojimer/tic-tac-toe",
-    liveUrl: "#",
+    liveUrl: "/demo/tic-tac-toe",
     features: [
       "Unbeatable AI opponent using minimax algorithm",
       "Real-time multiplayer functionality",
@@ -57,7 +57,7 @@ export const projects: Project[] = [
       "/habit-tracker-ss.png"
     ],
     githubUrl: "https://github.com/jojimer/habit-tracker",
-    liveUrl: "#",
+    liveUrl: "/demo/habit-tracker",
     features: [
       "Daily, weekly, and monthly habit tracking",
       "Detailed progress analytics and visualizations",
@@ -88,7 +88,7 @@ export const projects: Project[] = [
       "/weather-app-ss.png"
     ],
     githubUrl: "https://github.com/jojimer/weather-app",
-    liveUrl: "#",
+    liveUrl: "/demo/weather-app",
     features: [
       "Real-time weather updates and forecasts",
       "Interactive weather maps and radar",
