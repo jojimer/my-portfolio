@@ -1,16 +1,22 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
 import { useGameStore } from '@/lib/stores/game-store';
-import { GameUI } from './game-ui';
 import { SpaceBackground } from './space-background';
 import { Player } from './player';
 import { Enemies } from './enemies';
 import { Bullets } from './bullets';
 import { useMousePosition } from '@/hooks/use-mouse-position';
 import { useInView } from 'framer-motion';
+
+// Dynamically import GameCanvas and disable SSR
+const GameUI = dynamic(
+  () => import('./game-ui').then((mod) => mod.GameUI),
+  { ssr: false }
+);
 
 export function GameCanvas() {
   const canvasRef = useRef<HTMLDivElement>(null);

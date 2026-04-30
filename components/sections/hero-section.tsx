@@ -1,10 +1,16 @@
 "use client";
 
-import { GameCanvas } from '@/components/game/game-canvas';
+import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowDownCircle } from 'lucide-react';
 import { useGameStore } from '@/lib/stores/game-store';
+
+// Dynamically import GameCanvas and disable SSR
+const GameCanvas = dynamic(
+  () => import('@/components/game/game-canvas').then((mod) => mod.GameCanvas),
+  { ssr: false }
+);
 
 export function HeroSection() {
   const { gameState } = useGameStore();
