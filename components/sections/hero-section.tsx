@@ -1,6 +1,6 @@
 "use client";
 
-import { GameCanvas } from '@/components/game/game-canvas';
+import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowDownCircle, Lightbulb } from 'lucide-react';
@@ -8,6 +8,12 @@ import Lottie from 'lottie-react';
 import animationData from '@/public/assets/animation-data.json';
 import { useGameStore } from '@/lib/stores/game-store';
 import { isMobile } from 'react-device-detect';
+
+// Dynamically import GameCanvas and disable SSR
+const GameCanvas = dynamic(
+  () => import('@/components/game/game-canvas').then((mod) => mod.GameCanvas),
+  { ssr: false }
+);
 
 export function HeroSection() {
   const { gameState } = useGameStore();
